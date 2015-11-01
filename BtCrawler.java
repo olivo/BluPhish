@@ -117,7 +117,7 @@ class BtCrawler {
 		    // Trying to connect to determine if the connection doesn't require pairing (vulnerable).
 		    try {
 
-			//			ClientSession clientSession = (ClientSession)Connector.open(connectionURL);
+			ClientSession clientSession = (ClientSession)Connector.open(connectionURL);
 			isVulnerableConnection = true;
 		    }
 		    catch (Exception e) {}
