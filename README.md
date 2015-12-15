@@ -2,7 +2,7 @@
 Bluetooth device and service discovery tool that can be used for security assessment 
 and penetration testing.
 
-The application is written in Java, and relies on the Bluecove 2.1.1 API (http://bluecove.org/).
+BluPhish is written in Java, and relies on the Bluecove 2.1.1 API (http://bluecove.org/).
 
 # Compilation
 
@@ -51,11 +51,11 @@ In order to perform a non-pairing discovery, invoke BluPhish with the
 
 java -cp .;bluecove-2.1.1-SNAPSHOT.jar BluPhish --no-pair
 
+# Testing Environment
+
+BluPhish was tested on a 64-bit Windows 10 machine running the Winsock Bluetooth stack
+over a Kinivo BTD-400 Bluetooth adapter.
+
 # Contact
 
-Please direct any questions or suggestions to Oswaldo Olivo (oswaldo.l.olivo@gmail.com).
-
-
-
-
-
+Please direct any questions and suggestions to Oswaldo Olivo (oswaldo.l.olivo@gmail.com).
