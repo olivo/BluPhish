@@ -44,7 +44,7 @@ to connect to it, so it's secure in that sense.
 
 
 By default BluPhish will attempt to discover and pair with all the bluetooth services in order to probe for vulnerabilities. 
-** This will result in a pairing notification sent to the device. **
+**This will result in a pairing notification sent to the device.**
 
 In order to perform a non-pairing discovery, invoke BluPhish with the 
 '--no-pair' directive:
