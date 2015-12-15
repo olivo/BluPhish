@@ -79,9 +79,6 @@ class BtCrawler {
 
     public static void main(String[] args) throws Exception {
 
-	// Sidestep compliance with parts of the L2CAP protocol.
-	//	System.setProperty(BlueCoveConfigProperties.PROPERTY_JSR_82_PSM_MINIMUM_OFF, "true");
-
 	BtDiscoveryListener listener = new BtDiscoveryListener();
 
 	discoverDevices(listener);
@@ -89,7 +86,7 @@ class BtCrawler {
 
 	System.out.print("==============================================================");
 	System.out.println("==============================================================");
-	System.out.println("Device Name | Service Name | Authentication? | Encryption? | Connection URL | Vulnerable Connection?");
+	System.out.println("Device Name | Service Name | Connection URL (Protocol/BT Address/Port/Auth/Enc/Master-Slave) | Pairing Required?");
 	System.out.print("==============================================================");
 	System.out.println("==============================================================");
 
@@ -103,30 +100,24 @@ class BtCrawler {
 		    ((Object)servRecord.getAttributeValue(0x0100)).toString() : "";
 
 		String connectionURL = servRecord.getConnectionURL(ServiceRecord.NOAUTHENTICATE_NOENCRYPT, false);
-
-		boolean isAuthenticated = true;
-		boolean isEncrypted = true;
-		boolean isVulnerableConnection = false;
+		boolean pairingRequired = true;
 
 		// Connecting to the device using the OBEX protocol.
 		if (connectionURL != null) {
-		
-		    isAuthenticated = false;
-		    isEncrypted = false;
 		    
 		    // Trying to connect to determine if the connection doesn't require pairing (vulnerable).
 		    try {
 
 			ClientSession clientSession = (ClientSession)Connector.open(connectionURL);
-			isVulnerableConnection = true;
+			pairingRequired = false;;
 		    }
 		    catch (Exception e) {}
 		}
 		// Print diagnostic information.
 		System.out.print("==============================================================");
 		System.out.println("==============================================================");
-		System.out.print(deviceName + " | " + serviceName + " | " + isAuthenticated + " | ");
-		System.out.println(isEncrypted + " | " + connectionURL + " | " + isVulnerableConnection);
+		System.out.print(deviceName + " | " + serviceName + " | ");
+		System.out.println(connectionURL + " | " + (pairingRequired ? "Yes" : "No"));
 		System.out.print("==============================================================");
 		System.out.println("==============================================================");
 	    }
