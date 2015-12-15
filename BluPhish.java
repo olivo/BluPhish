@@ -23,7 +23,7 @@ import javax.microedition.io.StreamConnection;
 import javax.obex.*;
 
 // Class that processes discovered Bluetooth devices and services and displays diagnostic information.
-class BtCrawler {
+class BluPhish {
 
     static final Vector btDevices = new Vector();
     static final Object inquiryCompletedEvent = new Object();
@@ -79,6 +79,19 @@ class BtCrawler {
 
     public static void main(String[] args) throws Exception {
 
+	boolean pair = true;
+
+	if (args.length > 1 || args.length == 1 && !args[0].equals("--no-pair")) {
+	    System.out.println("Usage: java -cp .;bluecove-2.1.1-SNAPSHOT.jar BluPhish [--no-pair]");
+	    return;
+	}
+
+	// The user doesn't want BluPhish to attempt to pair with the devices.
+	if (args.length == 1 && args[0].equals("--no-pair")) {
+	    pair = false;
+	}
+
+
 	BtDiscoveryListener listener = new BtDiscoveryListener();
 
 	discoverDevices(listener);
@@ -106,12 +119,14 @@ class BtCrawler {
 		if (connectionURL != null) {
 		    
 		    // Trying to connect to determine if the connection doesn't require pairing (vulnerable).
-		    try {
+		    if (pair) {
+			try {
 
-			ClientSession clientSession = (ClientSession)Connector.open(connectionURL);
-			pairingRequired = false;;
+			    ClientSession clientSession = (ClientSession)Connector.open(connectionURL);
+			    pairingRequired = false;;
+			}
+			catch (Exception e) {}
 		    }
-		    catch (Exception e) {}
 		}
 		// Print diagnostic information.
 		System.out.print("==============================================================");

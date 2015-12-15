@@ -24,22 +24,22 @@ class BtDiscoveryListener implements DiscoveryListener {
     // Adds a discovered device to the global set of devices. 
     public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) {
 
-		    BtCrawler.btDevices.add(btDevice);
+		    BluPhish.btDevices.add(btDevice);
     }
 
     // Notifies all event listeners that device discovery is complete.
     public void inquiryCompleted(int discType) {
 
-	synchronized(BtCrawler.inquiryCompletedEvent) {
-	    BtCrawler.inquiryCompletedEvent.notifyAll();
+	synchronized(BluPhish.inquiryCompletedEvent) {
+	    BluPhish.inquiryCompletedEvent.notifyAll();
 	}
     }
 
     // Notifies all event listeners that service search is complete.
     public void serviceSearchCompleted(int transID, int respCode) {
 
-	synchronized(BtCrawler.serviceSearchCompletedEvent) {
-	    BtCrawler.serviceSearchCompletedEvent.notifyAll();
+	synchronized(BluPhish.serviceSearchCompletedEvent) {
+	    BluPhish.serviceSearchCompletedEvent.notifyAll();
 	}
     }
 
@@ -54,11 +54,11 @@ class BtDiscoveryListener implements DiscoveryListener {
 			RemoteDevice btDevice = servRecord[i].getHostDevice();
 			    
 			// Store the service information for the device.
-			if (!BtCrawler.btDevice2Service.containsKey(btDevice)) {
-			    BtCrawler.btDevice2Service.put(btDevice, new HashSet<ServiceRecord>());
+			if (!BluPhish.btDevice2Service.containsKey(btDevice)) {
+			    BluPhish.btDevice2Service.put(btDevice, new HashSet<ServiceRecord>());
 			}
 			
-			BtCrawler.btDevice2Service.get(btDevice).add(servRecord[i]);
+			BluPhish.btDevice2Service.get(btDevice).add(servRecord[i]);
 		    }
 		}
 }
